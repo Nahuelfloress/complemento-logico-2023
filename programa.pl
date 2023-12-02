@@ -69,9 +69,6 @@ nivelDeDificultadDeLaSala(Sala,Nivel):-
  %   esSalaDe(_,Empresa),    
   %  forall(esSalaDe(Sala,Empresa),sala(Sala,terrorifica(_,_))).
   
-experiencia(terrorifica(_,_)).
-experiencia(familiar(_,_)).
-experiencia(enigmatica(_)).
 
 esBuena(Empresa):-
     esSalaDe(Sala,Empresa),
@@ -83,36 +80,4 @@ esMacabra(Empresa):-
     not(esBuena(Empresa)).
 
 
-% 2)
-esClaustrofobica(Persona):-
-    persona(Persona,_,Peculiaridades),
-    member(claustrofobia,Peculiaridades).
-
-puedeSalir(Persona,Sala):-
-    persona(Persona,_,_),
-    sala(Sala,_),
-    nivelDeDificultadDeLaSala(Sala,1),
-    not(esClaustrofobica(Persona)).
-puedeSalir(Persona,Sala):-
-    persona(Persona,Edad,_),
-    sala(Sala,_),
-    nivelDeDificultadDeLaSala(Sala,Nivel),
-    not(esClaustrofobica(Persona)),
-    Edad >13,
-    Nivel < 5.
     
-
-% 5)
-
-promedioNivel(Empresa,Promedio):-
-    esSalaDe(Sala,Empresa),
-    findall(Nivel,nivelDeDificultadDeLaSala(Sala,Nivel),Niveles),
-    sumlist(Niveles,Suma),
-    length(Niveles,Cant),
-    Promedio is Suma/Cant.
-
-empresaCopada(Empresa):-
-    esSalaDe(_,Empresa),
-    not(esMacabra(Empresa)),
-    promedioNivel(Empresa,Promedio),
-    Promedio < 4.
